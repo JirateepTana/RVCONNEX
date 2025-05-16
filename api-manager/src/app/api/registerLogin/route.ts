@@ -20,7 +20,54 @@ const pool = mysql.createPool({
 
 const JWT_SECRET = 'JWTsecret'; // Use a secure secret in production
 
-// ...existing POST handler...
+// Register user
+export async function POST(req: NextRequest) {
+  try {
+    const { username, password } = await req.json();
+    if (!username || !password) {
+      return NextResponse.json({
+        success: false,
+        data: null,
+        message: null,
+        error: 'Username and password are required',
+      }, { status: 400 });
+    }
+
+    // Check if the username already exists
+    const [existingUsers] = await pool.query(
+      'SELECT * FROM users WHERE username = ?',
+      [username]
+    );
+    if ((existingUsers as any[]).length > 0) {
+      return NextResponse.json({
+        success: false,
+        data: null,
+        message: null,
+        error: 'Username already exists',
+      }, { status: 409 });
+    }
+
+    // Insert the new user into the database
+    await pool.query(
+      'INSERT INTO users (username, password) VALUES (?, ?)',
+      [username, password]
+    );
+
+    return NextResponse.json({
+      success: true,
+      data: null,
+      message: 'Registration successful',
+      error: null,
+    });
+  } catch (err: any) {
+    return NextResponse.json({
+      success: false,
+      data: null,
+      message: null,
+      error: err.message || 'Internal server error',
+    }, { status: 500 });
+  }
+}
 
 // Login user
 export async function PUT(req: NextRequest) {

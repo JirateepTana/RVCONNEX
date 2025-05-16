@@ -1,3 +1,6 @@
+-- filepath: c:\Github project\RVCONNEX\init.sql
+
+-- Create users table
 CREATE TABLE IF NOT EXISTS users (
   userID INT AUTO_INCREMENT PRIMARY KEY,
   username VARCHAR(100) NOT NULL UNIQUE,
@@ -6,6 +9,7 @@ CREATE TABLE IF NOT EXISTS users (
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
+-- Create tasks table
 CREATE TABLE IF NOT EXISTS tasks (
   id INT AUTO_INCREMENT PRIMARY KEY,
   title VARCHAR(255) NOT NULL,
@@ -16,10 +20,11 @@ CREATE TABLE IF NOT EXISTS tasks (
   CONSTRAINT fk_user FOREIGN KEY (updateuserby) REFERENCES users(userID)
 );
 
+-- Insert sample data into users table
+INSERT INTO users (userID, username, password) VALUES
+(1, 'admin', 'password123'); -- Ensure userID = 1 exists
 
-
-
--- Sample data for tasks table
+-- Insert sample data into tasks table
 INSERT INTO tasks (id, title, description, status, updateuserby, updated_at) VALUES
 (14, '1', '1', '1', 1, '2025-05-16 14:40:19'),
 (15, '2', '2', '2', 1, '2025-05-16 14:40:21'),

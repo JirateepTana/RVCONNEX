@@ -15,6 +15,8 @@ export default function LoginPage() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
     });
+    console.log("Response status:", res.status);
+    console.log("Response headers:", res.headers);
     const data = await res.json();
     if (data.success && data.token) {
       // Store JWT token in localStorage
