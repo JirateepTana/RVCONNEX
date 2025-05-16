@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mydatabase
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: myadmin
+    environment:
+      PMA_HOST: db
+      PMA_USER: myuser
+      PMA_PASSWORD: mypassword
+    ports:
+      - "3000:80"
+    depends_on:
+      - db
+
+  api-manager:
+    build:
+      context: ./api-manager
+    container_name: api_manager
+    environment:
+      - DB_HOST=db
+      - DB_USER=myuser
+      - DB_PASSWORD=mypassword
+      - DB_NAME=mydatabase
+      - DB_PORT=3306
+      - JWT_SECRET=JWTsecret
+    ports:
+      - "3001:3001"
+    depends_on:
+      - db
