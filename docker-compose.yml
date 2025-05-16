@@ -26,18 +26,18 @@ services:
     depends_on:
       - db
 
-  api-manager:
-    build:
-      context: ./api-manager
-    container_name: api_manager
-    environment:
-      - DB_HOST=db
-      - DB_USER=myuser
-      - DB_PASSWORD=mypassword
-      - DB_NAME=mydatabase
-      - DB_PORT=3306
-      - JWT_SECRET=JWTsecret
-    ports:
-      - "3001:3001"
-    depends_on:
-      - db
+  # api-manager:
+  #   build:
+  #     context: ./api-manager
+  #   container_name: api_manager
+  #   environment:
+  #     - DB_HOST=db
+  #     - DB_USER=myuser
+  #     - DB_PASSWORD=mypassword
+  #     - DB_NAME=mydatabase
+  #     - DB_PORT=3306
+  #     - JWT_SECRET=JWTsecret
+  #   ports:
+  #     - "3001:3001"
+  #   depends_on:
+  #     - db

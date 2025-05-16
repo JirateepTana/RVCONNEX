@@ -15,3 +15,14 @@ CREATE TABLE IF NOT EXISTS tasks (
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   CONSTRAINT fk_user FOREIGN KEY (updateuserby) REFERENCES users(userID)
 );
+
+
+
+
+-- Sample data for tasks table
+INSERT INTO tasks (id, title, description, status, updateuserby, updated_at) VALUES
+(14, '1', '1', '1', 1, '2025-05-16 14:40:19'),
+(15, '2', '2', '2', 1, '2025-05-16 14:40:21'),
+(16, '1', '1', '1', 1, '2025-05-16 14:40:39'),
+(17, '3', '3', '3', 1, '2025-05-16 14:45:21'),
+(18, '1', '1', '1', 1, '2025-05-16 15:16:29');
